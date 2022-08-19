@@ -61,7 +61,7 @@ First we need to locate people who have a Bachelor's degree using .loc, and find
 
 `df2 = len(df.loc[df.education == 'Bachelors'])`
 
-Then we can count the bachelor's percentage by dividing the number we got earlier with the total number of data then times 100. We can round the numbers 1 to 1 digit behind comma using round().
+Then we can count the bachelor's percentage by dividing the number we got earlier with the total number of data then times 100. We can round the numbers to 1 digit behind comma using round().
     
 `percentage_bachelors = round(df2/len(df)*100,1)`
 
