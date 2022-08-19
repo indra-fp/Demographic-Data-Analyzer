@@ -57,7 +57,7 @@ Then we can find the average age using .mean() function and round() to round the
 
 ### 3. What is the percentage of people who have a Bachelor's degree?
     
-First we need to locate people who have a Bachelor's degree using .loc(), and find the total of people using len.
+First we need to locate people who have a Bachelor's degree using .loc, and find the total of people using len.
 
 `df2 = len(df.loc[df.education == 'Bachelors'])`
 
