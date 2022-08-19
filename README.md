@@ -85,10 +85,78 @@ Same issues to answer the 4th question, but instead we are gonna use ~ to locate
 
 `lower_education_rich = round(len(df4[df4.salary == '>50K'])/len(df4)*100,1)`
 
+### 5. What is the minimum number of hours a person works per week (hours-per-week feature)?
+
+We can easily get the number using .min() on house-per-week column
+`min_work_hours = df['hours-per-week'].min()`
+
+### 6. What percentage of the people who work the minimum number of hours per week have a salary of >50K?
+    
+We can access the data using basic & to get the list of people who get min_work_hours(the variable that searched before) and have >50K salary
+
+note: to be honest I don't really know the difference between using basic selection like this one, using .isin, or using .loc on copying data to new dataframes. I'm still new on this and didn't really know which one to use for which, so I just try and error all those things until it produce the needed results. 
+
+    df5 = df[(df['hours-per-week'] == min_work_hours) & (df.salary == '>50K')] 
+
+Then we can calculate the percentage using the data we acquired above, divided it with the total number of people who are work the minimum number of hours per week that aren't received >50K salary.
+
+    rich_percentage = round(len(df5)/len(df[(df['hours-per-week'] == min_work_hours)])*100,1)
 
 
+### 7. What country has the highest percentage of people that earn >50K? and what is that percentage?
+
+This is a tricky question and I actually really messed up the way I got my result. If you read this and have a proper solution, feel free to hit me up and show the proper way to answer this.
+
+The data we need to answer this is a list of country and people who earn >50K
+
+First I save the list of total of people based on their country, using .value_counts(). Since that function return Series datatype, I'm using to_frame() to return it to DataFrame
+
+`df6 = df['native-country'].value_counts().to_frame()`
+
+Then I save all the people who received more than >50K, (Since the data is only provided 2 types of data, It is doable)
+
+`df7 = df[(df.salary == '>50K')]`
+
+After that I create another dataframe that similar to the first dataframe I created, but based on the people who received >50K
+
+`df8 = df7['native-country'].value_counts().to_frame()`
 
 
+Now is the fun and confusing part
 
+I add a total-employee column on df8 dataframe, based on df6 dataframe
+
+`df8['total-employee'] = df6['native-country']`
+
+Then I add another column called avg_country that will count the percentage of people who received more than 50K divided with those who received less then 50K based on each country
+    
+`df8['avg_country'] = round(df8['native-country']/df8['total-employee']*100,1)`
+
+After that, I sort the values Descending based on avg_country
+    
+`df8 = df8.sort_values('avg_country',ascending = False)`
+
+And thats it, now we can see that the highest percentage of each country. The top one is the Country with the higest percentage of people who earn >50k. We can access using index[0], and the percentage we can access it using .values[0][2] (the Index [0] represent the first row of the list, and the [0][2], represent the first row and the third column)
+
+`highest_earning_country = df8.index[0]`
+`highest_earning_country_percentage = df8.values[0][2]`
+
+### 8. Identify the most popular occupation for those who earn >50K in India.
+
+First we need to isolate the dataframe that contains people who earn >50K and from India
+ 
+`df9 = df[(df.salary == '>50K') & (df['native-country'] == 'India')]`
+
+Then we can count the occupation using .value_counts()
+`df10 = df.occupation.value_counts()`
+
+Lastly we can use .index[] to access the data
+    top_IN_occupation = df10.index[0] 
+
+
+-----------------------------------------------------
+
+
+The rest of the code are used for printing results, and for unit testing.
 
 
