@@ -21,7 +21,7 @@ Using Python, The project aims to Analyze Demographic Data using Pandas. The dat
 - What country has the highest percentage of people that earn >50K and what is that percentage?
 - Identify the most popular occupation for those who earn >50K in India.
 
-The dataset are saved in adult.data.csv, and the answer with the question are in demographic_data_analyzer.py
+The dataset are saved in `adult.data.csv`, and the answer with the question are in `demographic_data_analyzer.py`
 
 I'll try to explain all the codes on demographic_data_analyzer.py
 
@@ -148,10 +148,12 @@ First we need to isolate the dataframe that contains people who earn >50K and fr
 `df9 = df[(df.salary == '>50K') & (df['native-country'] == 'India')]`
 
 Then we can count the occupation using .value_counts()
+
 `df10 = df.occupation.value_counts()`
 
 Lastly we can use .index[] to access the data
-    top_IN_occupation = df10.index[0] 
+    
+`top_IN_occupation = df10.index[0]`
 
 
 -----------------------------------------------------
